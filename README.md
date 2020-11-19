@@ -2,74 +2,98 @@
 
 [Slides and Presentation Folder](https://drive.google.com/drive/folders/1NddLHopNLhAqZx7mU4sF_FbB-gEAjrpo?usp=sharing)
 
+
 ### Strategic Approach
 
-For this project, I have been tasked with finding the strongest indicators of sale price in the King County Dataset using linear regression techniques that I completed in Module 2 from the Flatiron Data Science Full Time Course.
+The stakeholder, SyriaTel, is a telecommunications company whose goal is to better understand what factors are causing customer churn. Due to limits on data size, the model will only be robust enough to be used by SyriaTel to analyze their specific data provided.
 
-I've defined my stakeholders as construction developers or real estate developers who are interesting in profiting from building property in the King County area. Information provided online at kingcounty.gov disclose that from 2010 to 2018 the population rose by roughly 400,000 people. Considering that this isn't a high growth rate, this may result in the inability to quickly sell properties which can be a hindrance to developers. Due to this inconvenience, developers would most likely be interested in:
+By exploring typical customer churn and using the CRISP-DM framework, I will seek to answer the following questions: 
 
- - Long term investment of building property and renting it out.
- - Long term investment of building commercial strip centers and renting them out.
+1. What features of the dataset are primary determinants of customer churn and to what extent?
+
+2. What are the ways that these findings can be interpreted and how can SyriaTel implement cost-effective solutions?
+
+3. Will these solutions be feasible in reducing the customer churn rate by at least 7%?
+
 
 ### The Data
 
-The data used was from the King County House Sales dataset. Additionally I pulled average income by zipcode from https://www.incomebyzipcode.com.
+The data used was provided by SyriaTel at this address: https://www.kaggle.com/becksddf/churn-in-telecoms-dataset
 
 
 ### Question One
 
-[Question One Notebook Link](https://github.com/jaykayso/dsc-phase-2-project-online/blob/master/Notebooks/Module%202%20Question%20One%20Final%20Draft.ipynb)
-<summary style="font-size: 24px">
-Question 1: What features are contributing most aggressively to the sale price?
+[Question One Notebook Link](https://github.com/jaykayso/dsc-mod-3-project-v2-1-onl01-dtsc-ft-041320/blob/master/notebooks/Question%20One.ipynb)
+
+Question 1: What features of the dataset are primary determinants of customer churn and to what extent?
     
-I got an r-sqared value of .928 in my OLS model by using feature engineering. I engineered features for latitudinal distance to North Mercer Island, and income by zipcode. Narrowing down the features by high pvalue and low coefficient values allowed me to determine the 3 most influential features for predicting the sale price. 
+I optimized for recall value which can be interpreted as optimizing against the occurences of not acknowledging a customer who is at risk of churn. Many models were explored, but the most successful was XGBoost with GridSearchCV.
     
-The 3 most influential features were: 
-- sqft_living: The indoor square footage.
-- lat_dist: The latitudinal distance from N. Mercer Island. 
-- income: Average income by zipcode.
+The most influential feature findings through the exploration of SHAP values were: 
+
+#### Contributors of High Customer Churn: Value of One
+
+- High total number of day minutes
+- High number of customer service calls
+- Customers who have an international plan
+- High number of night minutes
+- High number of international minutes
+
+#### Contributors of Low Customer Churn: Value of Zero
+
+- Customers with a voicemail plan
+- Customers with higher number of voicemails
+- High number of international calls
     
 ### Conclusion
 
-In conclusion, large property sizes are indicative of higher sale prices, so given a lot to build on, our stakeholders may to make a larger indoor area and smaller lot. Since income is a factor in sale price, budgets for building projects should be configured so that asking prices are relative to income prices in the area. Additionally further analysis could be implemented to standardise the features and determine how the features compare to each other when determining sale price. 
+In conclusion, it seems that SyriaTel could be losing customers due to rates that fluctuate from month to month. If this is the case, a flat monthly fee with a contract would be a better business model for acquiring customers.
 
 ### Question Two
 
-[Question Two Notebook Link](https://github.com/jaykayso/dsc-phase-2-project-online/blob/master/Notebooks/Module%202%20Question%20Two%20Final%20Draft.ipynb)
-<summary style="font-size: 24px">
-Question 2: What property types are most common?
+[Question Two Notebook Link](https://github.com/jaykayso/dsc-mod-3-project-v2-1-onl01-dtsc-ft-041320/blob/master/notebooks/Question%20Two.ipynb)
 
-To further understand the properties that have prices affected by the aforementioned features, I looked into the most common sale prices, most common property types, and the area where the most properties sold. 
-    
-The most common sale price is around $350,000. The data forms a normal distribution that skews right. 
-    
-The most common number of bedrooms is 3 or 4.
-Out of the 3 bedroom properties, the most common number of bathrooms is 1, 1.75, and 2.5.
-Out of the 4 bedroom properties, the most common number of bathrooms is 2.5.
-    
-The area with the most sales was the zip code of 98199.
+Question 2: What are the ways that these findings can be interpreted and how can SyriaTel implement cost-effective solutions?
+
+The high number of minutes leading to customer churn in total day minutes and night minutes makes it obvious that customers who are using more minutes are having to pay more and therefore, looking elsewhere for more cost-effective solutions. Another concept to explore here is whether or not the customers have a contract or are simply paying month-to-month.
+
 
 ### Conclusion
 
-In conclusion, understanding the types of properties that are most common can help in determining the demand in the market. However, this does not determine true demand in the market and futher analysis could be used to determine competition, properties currently for sale, properties that sell the most quickly, or other factors that indicate the supply and demand of the market. This information could then be leveraged to determine properties that could be sold quickly, which would be preferred for a developer.  
+The customers with an above average number of day minutes have been linked to being likely to churn. There are 293 of them. SyriaTel needs to reduce churn by 247 customers annually. By offering customers plans with flat monthly fees, SyriaTel will be able to reduce this churn and potentially save over $25,000.
 
 ### Question Three
     
-[Question Three Notebook Link](https://github.com/jaykayso/dsc-phase-2-project-online/blob/master/Notebooks/Module%202%20Question%20Three%20Final%20Draft.ipynb)
-<summary style="font-size: 24px">
-Question 3: What percentage of properties have all of the aforementioned attributes?
+[Question Three Notebook Link](https://github.com/jaykayso/dsc-mod-3-project-v2-1-onl01-dtsc-ft-041320/blob/master/notebooks/Question%20Three.ipynb)
+    
+Question 3: Will these solutions be feasible in reducing the customer churn rate by at least 7%?
 
-By splicing the data, I determined that all of the properties in the zipcode of 98199 with 3 or 4 bedrooms sold for over $350,000(the most common price). None of the properties had all of the most common attributes.
+The revenue by customer, not including customers with international plans was $60 on average. This does not seem like a feasible amount to charge a customer for a monthly phone subscription. 
     
 ### Conclusion
     
-In conclusion, these findings determine that the demand is not obvious. It shows that the property types are not homogenous and vary greatly. Further research based on the unique goals of the developers could be used to analyse the profit potential in the market. 
+In conclusion, SyriaTel could definitely reduce churn by at least 7% if it found a way to make a subscription model profitable. 
 
     
-# Conclusion and Future Work
-    
-Our developers should consider building properties with small outdoor areas to maximize the indoor square footage. Additionally the asking price should be relative to the average zipcode in the area. Since there is variation in the properties, further analysis would be useful in analyzing the market to better understand supply and demang. Those findings could be used in association with the goals of the developers to find opportunities with the best profit potential. 
+# Conclusion
+
+SyriaTel can significantly improve it's churn rate by implementing a flat monthly fee subscription model for it's customers. Not only do customers prefer subscription models as a way to automate their lives but also, subscription models help the companies using them too:
+ - Customers are not upset or surprised by their bills. 
+ - Companies know ahead of time what their estimated revenue is from subscriptions.
+ - Companies are able to provide better solutions for unique needs of customer segments. 
+ - Companies are able to build penalties around particular plans and subscriptions. 
+ - When customers receive penalties they are more likely to take responsibility since they are aware of the penalties of their subscription. 
  
+### Additional Recommendations: 
+
+- Initiating customer feedback surveys for customer service calls.
+- Initiating customer feedback surveys for customers leaving. This could be a requirement of cancellation via online survey or in person. 
+
+
+# Future Work
+
+Future work could allow for more customer segmenting, understanding the data in a better way and learning the answers to many of the questions posed by our findings that would be explained by understanding SyriaTel's business model. 
+
     
     
     
